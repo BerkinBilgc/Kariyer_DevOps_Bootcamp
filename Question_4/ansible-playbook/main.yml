@@ -1,0 +1,34 @@
+---
+- name: Automate tasks with Ansible
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install chronyd service
+      apt:
+        name: chrony
+        state: present
+
+    - name: Disable app armor service
+      service:
+        name: apparmor
+        state: stopped
+        enabled: no
+
+    - name: Set hostname
+      hostname:
+        name: "kariyer-{{ ansible_default_ipv4.address }}"
+
+    - name: Create kariyer user
+      user:
+        name: kariyer
+        uid: 3434
+        gid: 3434
+        state: present
+        createhome: yes
+
+    - name: Ensure kariyer group exists
+      group:
+        name: kariyer
+        gid: 3434
+        state: present

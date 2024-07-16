@@ -1,0 +1,21 @@
+# ci-cd/azure-pipelines.yml
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install ansible
+  displayName: 'Install Ansible'
+
+- script: |
+    ansible-playbook ci-cd/deploy_kubernetes.yml
+  displayName: 'Deploy Kubernetes with Kubespray'

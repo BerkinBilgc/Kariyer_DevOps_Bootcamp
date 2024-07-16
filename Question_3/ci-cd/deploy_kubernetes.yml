@@ -1,0 +1,6 @@
+# ci-cd/deploy_kubernetes.yml
+- name: Deploy Kubernetes
+  hosts: localhost
+  tasks:
+    - name: Run Kubespray
+      command: ansible-playbook -i ../inventory/mycluster/hosts.yaml --become --become-user=root cluster.yml
